@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="7Pet - Transporte e Tudo para Pets. Cuidamos do seu melhor amigo com amor, segurança e diversão! Táxi pet, passeios, hospedagem e muito mais." />
+    <meta name="keywords" content="transporte pet, táxi dog, pet shop, passeio com cachorro, hospedagem pet, 7pet, cuidados com pets" />
+    <meta name="author" content="7Pet" />
+    <meta name="theme-color" content="#f6a71c" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="7Pet - Transporte e Tudo para Pets" />
+    <meta property="og:description" content="Cuidamos do seu melhor amigo com amor, segurança e diversão!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://7pet.com.br" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="7Pet - Transporte e Tudo para Pets" />
+    <meta name="twitter:description" content="Cuidamos do seu melhor amigo com amor, segurança e diversão!" />
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <title>7Pet - Transporte e Tudo para Pets</title>
+    
+    <style>
+      /* Critical CSS for loading */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f7f7f7;
+      }
+      
+      /* Loading spinner */
+      .loading-spinner {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #f6a71c;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="loading-spinner"></div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
