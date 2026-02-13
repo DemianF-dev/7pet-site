@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Plus, Minus, MessageCircle, PawPrint } from 'lucide-react';
-
+import { useState } from 'react';
+import { HelpCircle, Plus, Minus, MessageCircle, PawPrint } from 'lucide-react';
+import { SEO } from '../components/SEO';
 export function FAQ() {
     const faqs = [
         {
@@ -42,6 +42,10 @@ export function FAQ() {
 
     return (
         <div className="animate-fade-in">
+            <SEO
+                title="FAQ | Perguntas Frequentes sobre Serviços Pet"
+                description="Tem dúvidas sobre o táxi pet, valores ou como funcionam nossos serviços? Confira nosso FAQ completo ou fale conosco. Atendemos São Paulo e Osasco."
+            />
             {/* Hero */}
             <section className="py-20 bg-background relative overflow-hidden">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
@@ -68,6 +72,8 @@ export function FAQ() {
                                 <button
                                     className="w-full flex items-center justify-between p-6 lg:p-8 text-left"
                                     onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                                    aria-expanded={openIndex === i}
+                                    aria-label={`${openIndex === i ? 'Fechar' : 'Abrir'} pergunta: ${faq.question}`}
                                 >
                                     <span className={`text-xl font-bold font-heading ${openIndex === i ? 'text-primary' : 'text-foreground'}`}>
                                         {faq.question}
@@ -76,7 +82,11 @@ export function FAQ() {
                                         {openIndex === i ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
                                     </div>
                                 </button>
-                                <div className={`overflow-hidden transition-all duration-300 ${openIndex === i ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <div
+                                    className={`overflow-hidden transition-all duration-300 ${openIndex === i ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+                                    role="region"
+                                    aria-hidden={openIndex !== i}
+                                >
                                     <div className="p-6 lg:p-8 pt-0 text-lg text-foreground/70 font-body leading-relaxed border-t border-primary/10">
                                         {faq.answer}
                                     </div>
@@ -101,6 +111,7 @@ export function FAQ() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 bg-[#25d366] text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-[#128c7e] transition-all hover:scale-105 active:scale-95 shadow-xl shadow-green-500/20"
+                            aria-label="Falar com atendimento via WhatsApp"
                         >
                             <MessageCircle className="w-6 h-6 fill-white" />
                             Falar com Atendimento

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Shield, Sparkles, Heart, Clock, Star, Music, Users, CreditCard } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 export function Differentials() {
     const diffs = [
@@ -47,6 +47,10 @@ export function Differentials() {
 
     return (
         <div className="animate-fade-in">
+            <SEO
+                title="Diferenciais | Por que somos únicos?"
+                description="Veículos climatizados, higienização com ozônio, rastreamento em tempo real e atendimento humanizado. Descubra o que torna a 7Pet especial."
+            />
             {/* Intro */}
             <section className="py-20 bg-background relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -103,8 +107,9 @@ export function Differentials() {
                             <div className="w-64 h-64 lg:w-80 lg:h-80 bg-white/10 rounded-full blur-3xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
                             <img
                                 src="/hero-dog.png"
-                                alt="Pet feliz"
+                                alt="Pet feliz sendo transportado com segurança"
                                 className="w-full max-w-sm mx-auto relative z-10 drop-shadow-2xl animate-float"
+                                loading="lazy"
                             />
                         </div>
                     </div>

@@ -10,13 +10,13 @@ interface LayoutProps {
     scrollProgress: number;
     handleLogoClick: () => void;
     showEasterEgg: boolean;
-    scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void;
+    scrollToSection: (ref: React.RefObject<HTMLDivElement | null>) => void;
     refs: {
-        heroRef: React.RefObject<HTMLDivElement>;
-        servicesRef: React.RefObject<HTMLDivElement>;
-        aboutRef: React.RefObject<HTMLDivElement>;
-        processRef: React.RefObject<HTMLDivElement>;
-        testimonialsRef: React.RefObject<HTMLDivElement>;
+        heroRef: React.RefObject<HTMLDivElement | null>;
+        servicesRef: React.RefObject<HTMLDivElement | null>;
+        aboutRef: React.RefObject<HTMLDivElement | null>;
+        processRef: React.RefObject<HTMLDivElement | null>;
+        testimonialsRef: React.RefObject<HTMLDivElement | null>;
     };
 }
 

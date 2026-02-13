@@ -1,9 +1,13 @@
-import React from 'react';
 import { Users, Car, Home, TrendingUp, Heart, CheckCircle, ArrowRight } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 export function Partners() {
     return (
         <div className="animate-fade-in">
+            <SEO
+                title="Seja um Parceiro | Oportunidades no Mercado Pet"
+                description="Quer crescer no mercado pet? Una-se à rede da 7Pet como prestador de serviços ou parceiro de negócios em São Paulo e Osasco. Modelo ganha-ganha garantido."
+            />
             {/* Hero */}
             <section className="relative py-20 bg-white overflow-hidden">
                 <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />

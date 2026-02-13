@@ -4,8 +4,8 @@ import { Facebook, Instagram, Twitter, MessageCircle, Heart } from 'lucide-react
 interface FooterProps {
     petMode: boolean;
     setPetMode: (mode: boolean) => void;
-    scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void;
-    heroRef: React.RefObject<HTMLDivElement>;
+    scrollToSection: (ref: React.RefObject<HTMLDivElement | null>) => void;
+    heroRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: FooterProps) {
@@ -43,10 +43,10 @@ export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: Footer
                         </p>
                         <div className="flex gap-4">
                             {[
-                                { icon: Facebook, href: "https://facebook.com/7pet.face" },
-                                { icon: Instagram, href: "https://www.instagram.com/7pet.insta" },
-                                { icon: Twitter, href: "https://twitter.com/setpetevc" },
-                                { icon: MessageCircle, href: "https://t.me/tele7pet" }
+                                { icon: Facebook, href: "https://facebook.com/7pet.face", label: "Facebook" },
+                                { icon: Instagram, href: "https://www.instagram.com/7pet.insta", label: "Instagram" },
+                                { icon: Twitter, href: "https://twitter.com/setpetevc", label: "Twitter" },
+                                { icon: MessageCircle, href: "https://t.me/tele7pet", label: "Telegram" }
                             ].map((social, i) => (
                                 <a
                                     key={i}
@@ -54,6 +54,7 @@ export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: Footer
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-10 h-10 bg-background/10 rounded-full flex items-center justify-center hover:bg-primary hover:scale-110 transition-all duration-300"
+                                    aria-label={`Visite nosso ${social.label}`}
                                 >
                                     <social.icon className="w-5 h-5" />
                                 </a>
@@ -74,11 +75,11 @@ export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: Footer
                             ].map((link, i) => (
                                 <li key={i}>
                                     {link.to ? (
-                                        <Link to={link.to} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform">
+                                        <Link to={link.to} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform" aria-label={`Ir para ${link.label}`}>
                                             {link.label}
                                         </Link>
                                     ) : (
-                                        <a href={link.href} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform">
+                                        <a href={link.href} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform" aria-label={`Ir para ${link.label}`}>
                                             {link.label}
                                         </a>
                                     )}
@@ -99,7 +100,7 @@ export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: Footer
                                 { label: "Promos Para Pets", href: "https://7pet.com.br/promosprapets/" }
                             ].map((link, i) => (
                                 <li key={i}>
-                                    <a href={link.href} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform">
+                                    <a href={link.href} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform" aria-label={`Acessar ${link.label}`}>
                                         {link.label}
                                     </a>
                                 </li>
@@ -119,7 +120,7 @@ export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: Footer
                                 { label: "eBooks Gratuitos", href: "https://7pet.com.br/ebook1/" }
                             ].map((link, i) => (
                                 <li key={i}>
-                                    <a href={link.href} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform">
+                                    <a href={link.href} className="text-background/60 hover:text-secondary transition-colors inline-block hover:translate-x-1 transition-transform" aria-label={`Ler sobre ${link.label}`}>
                                         {link.label}
                                     </a>
                                 </li>
@@ -139,13 +140,14 @@ export function Footer({ petMode, setPetMode, scrollToSection, heroRef }: Footer
                     </div>
 
                     {/* Secret Pet Mode Toggle */}
-                    <div
+                    <button
                         className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 active:scale-75 ${petMode ? 'bg-primary shadow-sparkle scale-110' : 'bg-background/5 grayscale opacity-20 hover:opacity-100 hover:grayscale-0'}`}
                         onClick={() => setPetMode(!petMode)}
+                        aria-label={petMode ? "Desativar Modo Pet" : "Ativar Modo Pet"}
                         title="Secret Pet Mode"
                     >
                         <Heart className={`w-6 h-6 ${petMode ? 'text-white fill-white animate-pulse' : 'text-background'}`} />
-                    </div>
+                    </button>
 
                     <div className="text-center md:text-right">
                         <p className="text-background/40 text-xs font-body">

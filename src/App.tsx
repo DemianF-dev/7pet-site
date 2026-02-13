@@ -13,7 +13,6 @@ import { FAQ } from './pages/FAQ';
 function App() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showEasterEgg, setShowEasterEgg] = useState(false);
-  const [logoClicks, setLogoClicks] = useState(0);
   const [counters, setCounters] = useState({ years: 0, trips: 0, clients: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isSloganHovered, setIsSloganHovered] = useState(false);
@@ -104,16 +103,16 @@ function App() {
       const easeOut = 1 - Math.pow(1 - progress, 3);
 
       setCounters({
-        years: Math.floor(easeOut * 4),
-        trips: Math.floor(easeOut * 13800),
-        clients: Math.floor(easeOut * 1400)
+        years: Math.floor(easeOut * 5),
+        trips: Math.floor(easeOut * 18200),
+        clients: Math.floor(easeOut * 2150)
       });
 
       if (step >= steps) clearInterval(timer);
     }, interval);
   };
 
-  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
       const navHeight = 84;
       const elementPosition = ref.current.getBoundingClientRect().top;
@@ -127,15 +126,8 @@ function App() {
   };
 
   const handleLogoClick = () => {
-    setLogoClicks(prev => {
-      const next = prev + 1;
-      if (next === 7) {
-        setShowEasterEgg(true);
-        setTimeout(() => setShowEasterEgg(false), 5000);
-        return 0;
-      }
-      return next;
-    });
+    setShowEasterEgg(true);
+    setTimeout(() => setShowEasterEgg(false), 5000);
   };
 
   return (

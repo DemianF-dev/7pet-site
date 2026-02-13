@@ -1,9 +1,13 @@
-import React from 'react';
 import { Target, Eye, Heart, Shield, Award, Users, Lightbulb, Zap, Smile } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 export function AboutUs() {
     return (
         <div className="animate-fade-in">
+            <SEO
+                title="Sobre Nossa Alma | Valores e História"
+                description="Conheça a missão, visão e os valores que movem a 7Pet. Nossa dedicação total ao bem-estar animal e transparência com os tutores em São Paulo e Osasco."
+            />
             {/* Header Section */}
             <section className="relative py-20 bg-gradient-to-r from-primary to-secondary text-white overflow-hidden">
                 <div className="absolute inset-0 opacity-10 pointer-events-none">
