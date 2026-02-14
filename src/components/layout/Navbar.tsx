@@ -1,5 +1,6 @@
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { PawPrint, MessageCircle, Sparkles } from 'lucide-react';
+import { PawPrint, MessageCircle, Sparkles, Store } from 'lucide-react';
 
 interface NavbarProps {
     scrollProgress: number;
@@ -13,6 +14,7 @@ interface NavbarProps {
         aboutRef: React.RefObject<HTMLDivElement | null>;
         processRef: React.RefObject<HTMLDivElement | null>;
         testimonialsRef: React.RefObject<HTMLDivElement | null>;
+        statsRef: React.RefObject<HTMLDivElement | null>;
     };
 }
 
@@ -74,8 +76,13 @@ export function Navbar({
                     <div className="hidden lg:flex items-center gap-8" role="navigation">
                         <button onClick={() => handleNavClick('heroRef')} className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90" aria-label="Navegar para Home">Home</button>
                         <button onClick={() => handleNavClick('servicesRef')} className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90" aria-label="Navegar para Serviços">Serviços</button>
+                        <Link to="/thepet" className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90 flex items-center gap-1" aria-label="Navegar para The Pet Boutique">
+                            <Store className="w-4 h-4" />
+                            The Pet
+                        </Link>
                         <button onClick={() => handleNavClick('aboutRef')} className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90" aria-label="Navegar para Quem Somos">Quem Somos</button>
                         <button onClick={() => handleNavClick('processRef')} className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90" aria-label="Navegar para Como Funciona">Como Funciona</button>
+                        <Link to="/blog" className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90" aria-label="Navegar para Blog">Blog</Link>
                         <button onClick={() => handleNavClick('testimonialsRef')} className="text-foreground/80 hover:text-primary transition-colors font-semibold nav-link font-heading active:scale-90" aria-label="Navegar para Depoimentos">Depoimentos</button>
                     </div>
 
@@ -109,12 +116,17 @@ export function Navbar({
             </div>
 
             {/* Mobile menu overlay */}
-            <div className={`lg:hidden fixed inset-x-0 top-20 bg-background/95 backdrop-blur-xl border-b border-primary/10 overflow-hidden transition-all duration-500 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className={`lg:hidden fixed inset-x-0 top-20 bg-background/95 backdrop-blur-xl border-b border-primary/10 overflow-hidden transition-all duration-500 ${isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 <div className="p-6 flex flex-col gap-4" role="menu">
                     <button onClick={() => handleNavClick('heroRef')} className="text-left text-lg font-bold font-heading py-2 border-b border-primary/5 active:translate-x-2 transition-transform" role="menuitem">Home</button>
                     <button onClick={() => handleNavClick('servicesRef')} className="text-left text-lg font-bold font-heading py-2 border-b border-primary/5 active:translate-x-2 transition-transform" role="menuitem">Serviços</button>
+                    <Link to="/thepet" onClick={() => setIsMenuOpen(false)} className="text-left text-lg font-bold font-heading py-2 border-b border-primary/5 active:translate-x-2 transition-transform flex items-center gap-2" role="menuitem">
+                        <Store className="w-5 h-5" />
+                        The Pet Boutique
+                    </Link>
                     <button onClick={() => handleNavClick('aboutRef')} className="text-left text-lg font-bold font-heading py-2 border-b border-primary/5 active:translate-x-2 transition-transform" role="menuitem">Quem Somos</button>
                     <button onClick={() => handleNavClick('processRef')} className="text-left text-lg font-bold font-heading py-2 border-b border-primary/5 active:translate-x-2 transition-transform" role="menuitem">Como Funciona</button>
+                    <Link to="/blog" onClick={() => setIsMenuOpen(false)} className="text-left text-lg font-bold font-heading py-2 border-b border-primary/5 active:translate-x-2 transition-transform" role="menuitem">Blog</Link>
                     <button onClick={() => handleNavClick('testimonialsRef')} className="text-left text-lg font-bold font-heading py-2 active:translate-x-2 transition-transform" role="menuitem">Depoimentos</button>
                 </div>
             </div>

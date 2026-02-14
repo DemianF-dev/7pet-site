@@ -1,22 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Layout & Pages
 import { Layout } from './components/layout/Layout';
 import { Home } from './pages/Home';
-import { AboutUs } from './pages/AboutUs';
 import { Differentials } from './pages/Differentials';
 import { Partners } from './pages/Partners';
 import { FAQ } from './pages/FAQ';
+import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
+import { ThePetBoutique } from './pages/ThePetBoutique';
 
 function App() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showEasterEgg, setShowEasterEgg] = useState(false);
-  const [counters, setCounters] = useState({ years: 0, trips: 0, clients: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isSloganHovered, setIsSloganHovered] = useState(false);
   const [petMode, setPetMode] = useState(false);
+
+  // Valores fixos para as estatísticas
+  const counters = {
+    years: 5,
+    trips: 18200,
+    clients: 2150
+  };
 
   const location = useLocation();
 
@@ -37,20 +43,15 @@ function App() {
   };
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
     const handleScroll = () => {
       const scrolled = window.scrollY;
       const height = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress((scrolled / height) * 100);
+      const progress = height > 0 ? (scrolled / height) * 100 : 0;
+      setScrollProgress(progress);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -60,68 +61,30 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  // Handle cross-page scrolling
-  useEffect(() => {
-    if (location.pathname === '/' && location.state?.scrollTo) {
-      const section = location.state.scrollTo as keyof typeof refs;
-      setTimeout(() => {
-        scrollToSection(refs[section]);
-      }, 100);
-    }
-  }, [location]);
-
-  // Counter animation logic
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCounters();
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [location.pathname]); // Re-observe if the path changes back to Home
-
-  const animateCounters = () => {
-    const duration = 2500;
-    const steps = 60;
-    const interval = duration / steps;
-    let step = 0;
-
-    const timer = setInterval(() => {
-      step++;
-      const progress = step / steps;
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-
-      setCounters({
-        years: Math.floor(easeOut * 5),
-        trips: Math.floor(easeOut * 18200),
-        clients: Math.floor(easeOut * 2150)
-      });
-
-      if (step >= steps) clearInterval(timer);
-    }, interval);
-  };
-
+  // Robust Scroll To Section Helper
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
-    if (ref.current) {
-      const navHeight = 84;
-      const elementPosition = ref.current.getBoundingClientRect().top;
+    const navHeight = 84;
+    let targetElement = ref.current;
+
+    // Fallback: If ref is strictly null, try to find by ID based on known refs
+    if (!targetElement) {
+      if (ref === refs.heroRef) targetElement = document.getElementById('hero') as HTMLDivElement;
+      if (ref === refs.servicesRef) targetElement = document.getElementById('services') as HTMLDivElement;
+      if (ref === refs.aboutRef) targetElement = document.getElementById('about') as HTMLDivElement;
+      if (ref === refs.processRef) targetElement = document.getElementById('process') as HTMLDivElement;
+      if (ref === refs.testimonialsRef) targetElement = document.getElementById('testimonials') as HTMLDivElement;
+    }
+
+    if (targetElement) {
+      const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navHeight;
 
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
+    } else {
+      console.warn('Element not found for scrolling');
     }
   };
 
@@ -145,9 +108,6 @@ function App() {
           path="/"
           element={
             <Home
-              mousePos={mousePos}
-              isSloganHovered={isSloganHovered}
-              setIsSloganHovered={setIsSloganHovered}
               petMode={petMode}
               counters={counters}
               scrollToSection={scrollToSection}
@@ -155,10 +115,12 @@ function App() {
             />
           }
         />
-        <Route path="/sobre" element={<AboutUs />} />
         <Route path="/diferenciais" element={<Differentials />} />
         <Route path="/parceiros" element={<Partners />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/thepet" element={<ThePetBoutique />} />
       </Routes>
     </Layout>
   );

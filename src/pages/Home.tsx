@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
     PawPrint,
     Heart,
@@ -17,11 +18,9 @@ import {
     Bone
 } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { AnimatedCounter } from '../components/AnimatedCounter';
 
 interface HomeProps {
-    mousePos: { x: number; y: number };
-    isSloganHovered: boolean;
-    setIsSloganHovered: (hovered: boolean) => void;
     petMode: boolean;
     counters: { years: number; trips: number; clients: number };
     scrollToSection: (ref: React.RefObject<HTMLDivElement | null>) => void;
@@ -36,110 +35,204 @@ interface HomeProps {
 }
 
 export function Home({
-    mousePos,
-    isSloganHovered,
-    setIsSloganHovered,
     petMode,
     counters,
     scrollToSection,
     refs
 }: HomeProps) {
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [isSloganHovered, setIsSloganHovered] = useState(false);
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            setMousePos({ x: e.clientX, y: e.clientY });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     return (
         <>
             <SEO
                 title="Transporte e Tudo para Pets | São Paulo & Osasco"
                 description="A 7Pet oferece transporte premium pet, táxi dog, passeios e cuidados integrados. Cuidamos do seu melhor amigo com amor e segurança. Peça seu orçamento!"
             />
-            {/* Hero Section */}
-            <section ref={refs.heroRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            {/* HERO SECTION - Impactante e Fluido */}
+            <section id="hero" ref={refs.heroRef} className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-[#fdf8f1]">
+                {/* Background Animado */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-[10%] left-[5%] animate-gentle-float" style={{ animationDelay: '0s' }}>
+                        <PawPrint className="w-20 h-20 text-[#ff7a3d]/5 rotate-12" />
+                    </div>
+                    <div className="absolute top-[35%] right-[10%] animate-gentle-float" style={{ animationDelay: '1s' }}>
+                        <PawPrint className="w-24 h-24 text-[#ff7a3d]/5 -rotate-12" />
+                    </div>
+                    <div className="absolute bottom-[15%] left-[15%] animate-gentle-float" style={{ animationDelay: '2s' }}>
+                        <PawPrint className="w-16 h-16 text-[#ff7a3d]/5 rotate-45" />
+                    </div>
+                    <div className="absolute bottom-[25%] right-[25%] animate-gentle-float" style={{ animationDelay: '1.5s' }}>
+                        <Sparkles className="w-12 h-12 text-yellow-400/20" />
+                    </div>
+                    <div className="absolute top-[60%] left-[8%] animate-gentle-float" style={{ animationDelay: '0.5s' }}>
+                        <Heart className="w-8 h-8 text-red-400/10 fill-red-400/10" />
+                    </div>
+                </div>
+
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <div className="text-center lg:text-left animate-fade-in-up">
-                            <div
-                                className="relative inline-block cursor-default group z-20"
-                                onMouseEnter={() => setIsSloganHovered(true)}
-                                onMouseLeave={() => setIsSloganHovered(false)}
-                            >
-                                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight font-heading">
-                                    <span className="inline-block animate-bounce-in" style={{ animationDelay: '0.1s' }}>Transporte</span>{' '}
-                                    <span className="inline-block text-primary animate-bounce-in" style={{ animationDelay: '0.2s' }}>e Tudo</span>{' '}
-                                    <span className="inline-block animate-bounce-in" style={{ animationDelay: '0.3s' }}>para</span>{' '}
-                                    <span className="inline-block text-secondary animate-bounce-in" style={{ animationDelay: '0.4s' }}>Pets</span>
-                                </h1>
-                                {isSloganHovered && (
-                                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-4">
-                                        <Heart className="w-6 h-6 text-red-400 animate-float fill-red-400" style={{ animationDelay: '0s' }} />
-                                        <PawPrint className="w-6 h-6 text-primary animate-float fill-primary" style={{ animationDelay: '0.2s' }} />
-                                        <Sparkles className="w-6 h-6 text-secondary animate-float" style={{ animationDelay: '0.4s' }} />
-                                    </div>
-                                )}
+                        {/* Left Side: Content com Animações Sequenciais */}
+                        <div className="text-center lg:text-left space-y-8">
+                            {/* Badge Premium */}
+                            <div className="animate-reveal-up" style={{ animationDelay: '0.1s', opacity: 0 }}>
+                                <div className="inline-flex items-center gap-2 bg-[#ff7a3d]/10 px-4 py-2 rounded-full border border-[#ff7a3d]/20">
+                                    <Sparkles className="w-4 h-4 text-[#ff7a3d] animate-pulse" />
+                                    <span className="text-sm font-semibold text-[#ff7a3d]">Transporte Premium para Pets</span>
+                                </div>
                             </div>
-                            <p className="text-xl sm:text-2xl text-foreground/70 mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in font-body" style={{ animationDelay: '0.5s' }}>
-                                Cuidamos do seu melhor amigo com <span className="text-primary font-bold">amor</span>,
-                                <span className="text-secondary font-bold"> segurança</span> e
-                                <span className="text-primary font-bold"> diversão</span>!
+
+                            {/* Título Principal */}
+                            <div className="animate-reveal-up" style={{ animationDelay: '0.2s', opacity: 0 }}>
+                                <div
+                                    className="relative inline-block cursor-default group"
+                                    onMouseEnter={() => setIsSloganHovered(true)}
+                                    onMouseLeave={() => setIsSloganHovered(false)}
+                                >
+                                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#4a2c2a] leading-[1.1] font-heading tracking-tight">
+                                        <span className="inline-block hover:scale-105 transition-transform duration-300">Transporte</span> <br />
+                                        <span className="text-[#ff7a3d] inline-block hover:scale-105 transition-transform duration-300">e Tudo</span>{' '}
+                                        <span className="inline-block hover:scale-105 transition-transform duration-300">para</span>{' '}
+                                        <span className="text-[#ff7a3d] inline-block hover:scale-105 transition-transform duration-300">Pets</span>
+                                    </h1>
+                                    
+                                    {/* Ícones flutuantes no hover */}
+                                    <div className={`absolute -top-8 left-1/2 -translate-x-1/2 flex gap-3 transition-all duration-500 ${isSloganHovered ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+                                        <Heart className="w-6 h-6 text-red-500 fill-red-500 animate-bounce" style={{ animationDelay: '0s' }} />
+                                        <PawPrint className="w-6 h-6 text-[#ff7a3d] fill-[#ff7a3d] animate-bounce" style={{ animationDelay: '0.1s' }} />
+                                        <Sparkles className="w-6 h-6 text-yellow-400 animate-bounce" style={{ animationDelay: '0.2s' }} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Descrição */}
+                            <p className="text-xl sm:text-2xl text-[#4a2c2a]/80 max-w-xl mx-auto lg:mx-0 font-body leading-relaxed animate-reveal-up" style={{ animationDelay: '0.3s', opacity: 0 }}>
+                                Cuidamos do seu melhor amigo com{' '}
+                                <span className="text-[#ff7a3d] font-bold relative inline-block group">
+                                    amor
+                                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-[#ff7a3d] rounded-full transition-all duration-300 group-hover:w-full" />
+                                </span>,{' '}
+                                <span className="text-[#ff7a3d] font-bold relative inline-block group">
+                                    segurança
+                                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-[#ff7a3d] rounded-full transition-all duration-300 group-hover:w-full" />
+                                </span>{' '}
+                                e{' '}
+                                <span className="text-[#ff7a3d] font-bold relative inline-block group">
+                                    diversão
+                                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-[#ff7a3d] rounded-full transition-all duration-300 group-hover:w-full" />
+                                </span>!
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: '0.7s' }}>
+
+                            {/* Botões com Efeitos */}
+                            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start animate-reveal-up" style={{ animationDelay: '0.4s', opacity: 0 }}>
                                 <a
                                     href="https://wa.me/5511934823781"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-accent text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-accent/90 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/30 animate-pulse-glow"
-                                    aria-label="Agendar um passeio via WhatsApp"
+                                    className="group relative bg-[#ff7a3d] text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-3 overflow-hidden shadow-xl shadow-[#ff7a3d]/30 hover:shadow-2xl hover:shadow-[#ff7a3d]/40 transition-all duration-300 hover:-translate-y-1 active:translate-y-0"
                                 >
-                                    <Car className="w-6 h-6" />
-                                    Agende um Passeio
+                                    <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+                                    <Car className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                                    <span>Agende um Passeio</span>
                                 </a>
                                 <button
                                     onClick={() => scrollToSection(refs.servicesRef)}
-                                    className="bg-white text-foreground px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-white/90 transition-all hover:scale-105 active:scale-95 border-2 border-primary/20 shadow-sm"
-                                    aria-label="Ver nossos serviços"
+                                    className="group bg-white text-[#4a2c2a] px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-3 border-2 border-[#4a2c2a]/10 hover:border-[#ff7a3d]/30 hover:bg-[#fff8f3] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 shadow-lg hover:shadow-xl"
                                 >
-                                    <Star className="w-6 h-6 text-secondary fill-secondary" />
-                                    Nossos Serviços
+                                    <Star className="w-6 h-6 text-[#ff7a3d] fill-[#ff7a3d] group-hover:rotate-180 transition-transform duration-500" />
+                                    <span>Nossos Serviços</span>
                                 </button>
+                            </div>
+
+                            {/* Trust Badges */}
+                            <div className="flex items-center justify-center lg:justify-start gap-6 text-[#4a2c2a]/60 text-sm animate-reveal-up" style={{ animationDelay: '0.5s', opacity: 0 }}>
+                                <div className="flex items-center gap-2 group cursor-default">
+                                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <CheckCircle className="w-4 h-4 text-green-600" />
+                                    </div>
+                                    <span className="group-hover:text-[#4a2c2a] transition-colors">Seguro Pet incluso</span>
+                                </div>
+                                <div className="flex items-center gap-2 group cursor-default">
+                                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+                                    </div>
+                                    <span className="group-hover:text-[#4a2c2a] transition-colors">+5.000 pets atendidos</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="relative h-[500px] lg:h-[600px]">
-                            <div
-                                className="absolute top-0 right-0 w-64 h-64 lg:w-80 lg:h-80 rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform cursor-pointer animate-float-slow hero-image-parallax"
-                                style={{
-                                    transform: `translate(${(mousePos.x - (typeof window !== 'undefined' ? window.innerWidth : 0) / 2) * 0.02}px, ${(mousePos.y - (typeof window !== 'undefined' ? window.innerHeight : 0) / 2) * 0.02}px)`,
-                                    animationDelay: '0s'
-                                }}
-                            >
-                                <img src="/hero-dog.png" alt="Cachorro feliz da 7Pet" className="w-full h-full object-cover" />
-                            </div>
-                            <div
-                                className="absolute top-1/3 left-0 w-56 h-56 lg:w-72 lg:h-72 rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform cursor-pointer z-10 animate-float-slow hero-image-parallax"
-                                style={{
-                                    transform: `translate(${(mousePos.x - (typeof window !== 'undefined' ? window.innerWidth : 0) / 2) * -0.015}px, ${(mousePos.y - (typeof window !== 'undefined' ? window.innerHeight : 0) / 2) * -0.015}px)`,
-                                    animationDelay: '0.5s'
-                                }}
-                            >
-                                <img src="/hero-cat.png" alt="Gato feliz da 7Pet" className="w-full h-full object-cover" />
-                            </div>
-                            <div
-                                className="absolute bottom-0 right-1/4 w-52 h-52 lg:w-64 lg:h-64 rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform cursor-pointer animate-float-slow hero-image-parallax"
-                                style={{
-                                    transform: `translate(${(mousePos.x - (typeof window !== 'undefined' ? window.innerWidth : 0) / 2) * 0.025}px, ${(mousePos.y - (typeof window !== 'undefined' ? window.innerHeight : 0) / 2) * 0.025}px)`,
-                                    animationDelay: '1s'
-                                }}
-                            >
-                                <img src="/hero-dog2.png" alt="Cachorro golden sendo transportado" className="w-full h-full object-cover" />
-                            </div>
+                        {/* Right Side: Image Composition com Animações */}
+                        <div className="relative h-[500px] lg:h-[600px] w-full max-w-[550px] mx-auto lg:ml-auto mt-12 lg:mt-0">
+                            <div className="relative w-full h-full">
+                                {/* Top Dog (White) - Entrada da direita */}
+                                <div
+                                    className="absolute top-0 right-0 w-[200px] sm:w-[240px] lg:w-[280px] aspect-[4/5] z-10 rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white shadow-2xl cursor-pointer hover:scale-105 hover:rotate-3 hover:shadow-3xl transition-all duration-500 animate-fade-in-right group"
+                                    style={{
+                                        animationDelay: '0.3s',
+                                        opacity: 0,
+                                        transform: `translate(${(mousePos.x - window.innerWidth / 2) * 0.02}px, ${(mousePos.y - window.innerHeight / 2) * 0.02}px) rotate(6deg)`,
+                                    }}
+                                >
+                                    <img src="/hero-dog.png" alt="Cachorro" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                </div>
 
-                            {/* Floating badges */}
-                            <div className="absolute top-10 left-10 bg-white px-4 py-2 rounded-full shadow-lg animate-bounce-soft">
-                                <span className="flex items-center gap-2 text-sm font-semibold text-[#333]">
-                                    <Heart className="w-4 h-4 text-red-500 fill-red-500" /> Amor
-                                </span>
-                            </div>
-                            <div className="absolute bottom-20 right-0 bg-white px-4 py-2 rounded-full shadow-lg animate-bounce-soft" style={{ animationDelay: '0.5s' }}>
-                                <span className="flex items-center gap-2 text-sm font-semibold text-[#333]">
-                                    <Star className="w-4 h-4 text-[#f8d346] fill-[#f8d346]" /> 5 Estrelas
-                                </span>
+                                {/* Center Cat - Entrada da esquerda */}
+                                <div
+                                    className="absolute top-[20%] left-0 w-[190px] sm:w-[230px] lg:w-[270px] aspect-[4/5] z-30 rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white shadow-2xl cursor-pointer hover:scale-105 hover:-rotate-2 hover:shadow-3xl transition-all duration-500 animate-fade-in-left group"
+                                    style={{
+                                        animationDelay: '0.5s',
+                                        opacity: 0,
+                                        transform: `translate(${(mousePos.x - window.innerWidth / 2) * -0.015}px, ${(mousePos.y - window.innerHeight / 2) * -0.015}px) rotate(-3deg)`,
+                                    }}
+                                >
+                                    <img src="/hero-cat.png" alt="Gato" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    
+                                    {/* Badge Amor com animação */}
+                                    <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md rounded-full px-4 py-2 shadow-xl flex items-center gap-2 z-40 border border-primary/5 animate-pop-in hover:scale-110 transition-transform cursor-default" style={{ animationDelay: '0.8s' }}>
+                                        <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" />
+                                        <span className="text-sm font-bold text-[#4a2c2a]">Amor</span>
+                                    </div>
+                                </div>
+
+                                {/* Bottom Dog - Entrada de baixo */}
+                                <div
+                                    className="absolute bottom-0 right-[10%] w-[180px] sm:w-[210px] lg:w-[250px] aspect-[4/5] z-20 rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white shadow-2xl cursor-pointer hover:scale-105 hover:rotate-2 hover:shadow-3xl transition-all duration-500 animate-slide-up-bounce group"
+                                    style={{
+                                        animationDelay: '0.7s',
+                                        opacity: 0,
+                                        transform: `translate(${(mousePos.x - window.innerWidth / 2) * 0.025}px, ${(mousePos.y - window.innerHeight / 2) * 0.025}px) rotate(-6deg)`,
+                                    }}
+                                >
+                                    <img src="/hero-dog2.png" alt="Cachorro Golden" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    
+                                    {/* Badge 5 Estrelas com animação */}
+                                    <div className="absolute -left-4 bottom-1/4 bg-white/95 backdrop-blur-md rounded-full px-4 py-2 shadow-xl flex items-center gap-2 z-40 border border-primary/5 animate-pop-in hover:scale-110 transition-transform cursor-default" style={{ animationDelay: '1s' }}>
+                                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 animate-spin" style={{ animationDuration: '3s' }} />
+                                        <span className="text-sm font-bold text-[#4a2c2a]">5 Estrelas</span>
+                                    </div>
+                                </div>
+
+                                {/* Elementos Decorativos Animados */}
+                                <div className="absolute top-1/2 -right-8 animate-gentle-float" style={{ animationDelay: '0.5s' }}>
+                                    <Bone className="w-12 h-12 text-[#ff7a3d]/20 rotate-45 hover:rotate-90 transition-transform duration-500 cursor-pointer" />
+                                </div>
+                                <div className="absolute -top-10 left-10 animate-gentle-float" style={{ animationDelay: '1s' }}>
+                                    <PawPrint className="w-16 h-16 text-[#ff7a3d]/15 rotate-12" />
+                                </div>
+                                <div className="absolute bottom-20 -left-4 animate-gentle-float" style={{ animationDelay: '1.5s' }}>
+                                    <Sparkles className="w-8 h-8 text-yellow-400/30" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +266,7 @@ export function Home({
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                         <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] p-10 text-center animate-fade-in-up border border-white/20 hover:bg-white/20 transition-all duration-500 group" style={{ animationDelay: '0.1s' }}>
                             <div className="text-6xl lg:text-7xl font-bold text-white mb-3 font-heading tabular-nums group-hover:scale-110 transition-transform duration-500">
-                                +{counters.years}
+                                +<AnimatedCounter end={counters.years} duration={2000} />
                             </div>
                             <p className="text-white/90 text-xl font-bold font-body">Anos de Empresa</p>
                             <div className="w-12 h-1 bg-white/30 mx-auto mt-4 rounded-full" />
@@ -181,7 +274,7 @@ export function Home({
 
                         <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] p-10 text-center animate-fade-in-up border border-white/20 hover:bg-white/20 transition-all duration-500 group" style={{ animationDelay: '0.2s' }}>
                             <div className="text-6xl lg:text-7xl font-bold text-white mb-3 font-heading tabular-nums group-hover:scale-110 transition-transform duration-500">
-                                +{counters.trips.toLocaleString('pt-BR')}
+                                +<AnimatedCounter end={counters.trips} duration={2500} />
                             </div>
                             <p className="text-white/90 text-xl font-bold font-body">Viagens Realizadas</p>
                             <p className="text-white/60 text-sm mt-2 font-body italic">Com nossos AUmigos</p>
@@ -190,7 +283,7 @@ export function Home({
 
                         <div className="bg-white/10 backdrop-blur-md rounded-[2.5rem] p-10 text-center animate-fade-in-up border border-white/20 hover:bg-white/20 transition-all duration-500 group" style={{ animationDelay: '0.3s' }}>
                             <div className="text-6xl lg:text-7xl font-bold text-white mb-3 font-heading tabular-nums group-hover:scale-110 transition-transform duration-500">
-                                +{counters.clients.toLocaleString('pt-BR')}
+                                +<AnimatedCounter end={counters.clients} duration={2000} />
                             </div>
                             <p className="text-white/90 text-xl font-bold font-body">Clientes Atendidos</p>
                             <p className="text-white/60 text-sm mt-2 font-body italic">Confiança e Segurança</p>
@@ -235,10 +328,24 @@ export function Home({
                 </div>
             </section>
 
-            {/* Services Section */}
-            <section ref={refs.servicesRef} className="py-20 bg-background relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16 animate-fade-in-up">
+            {/* Services Section - Interativo e Animado */}
+            <section id="services" ref={refs.servicesRef} className="py-20 bg-background relative overflow-hidden">
+                {/* Background Decorativo */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-[10%] left-[5%] animate-gentle-float opacity-30">
+                        <PawPrint className="w-32 h-32 text-primary/5" />
+                    </div>
+                    <div className="absolute bottom-[10%] right-[5%] animate-gentle-float opacity-30" style={{ animationDelay: '2s' }}>
+                        <PawPrint className="w-40 h-40 text-primary/5" />
+                    </div>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-16 animate-reveal-up">
+                        <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6 border border-primary/20">
+                            <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+                            <span className="text-primary font-bold font-body">O que oferecemos</span>
+                        </div>
                         <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 font-heading">
                             Nossos Serviços
                         </h2>
@@ -254,34 +361,38 @@ export function Home({
                                 title: 'Táxi Pet',
                                 desc: 'Transporte seguro e confortável para seu pet ir aonde precisar.',
                                 image: '/service-taxi.jpg',
-                                color: 'from-primary to-secondary'
+                                color: 'from-primary to-secondary',
+                                bgColor: 'bg-orange-50'
                             },
                             {
                                 icon: TreePine,
                                 title: 'Passeios',
                                 desc: 'Seu pet faz exercícios e se diverte com nossos passeadores.',
                                 image: '/service-walk.jpg',
-                                color: 'from-green-400 to-green-500'
+                                color: 'from-green-400 to-green-500',
+                                bgColor: 'bg-green-50'
                             },
                             {
                                 icon: Package,
                                 title: 'Mudanças',
                                 desc: 'Transporte especializado para mudanças com seu pet.',
                                 image: '/service-move.jpg',
-                                color: 'from-blue-400 to-blue-500'
+                                color: 'from-blue-400 to-blue-500',
+                                bgColor: 'bg-blue-50'
                             },
                             {
                                 icon: HomeIcon,
                                 title: 'Hospedagem',
                                 desc: 'Cuidamos do seu pet enquanto você viaja.',
                                 image: '/service-host.jpg',
-                                color: 'from-purple-400 to-purple-500'
+                                color: 'from-purple-400 to-purple-500',
+                                bgColor: 'bg-purple-50'
                             }
                         ].map((service, index) => (
                             <div
                                 key={index}
-                                className="group bg-white rounded-3xl overflow-hidden shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 animate-fade-in-up border border-primary/5 active:scale-95"
-                                style={{ animationDelay: `${index * 0.1}s` }}
+                                className="group bg-white rounded-3xl overflow-hidden shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 animate-reveal-up border border-primary/5 cursor-pointer"
+                                style={{ animationDelay: `${0.2 + index * 0.1}s`, opacity: 0 }}
                             >
                                 <div className="relative h-48 overflow-hidden">
                                     <img
@@ -290,13 +401,25 @@ export function Home({
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
                                     />
-                                    <div className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-0 group-hover:opacity-40 transition-opacity duration-300`} />
-                                    <div className={`absolute top-4 right-4 bg-white/90 p-3 rounded-xl transition-all duration-500 ${petMode ? 'animate-sparkle rotate-12 scale-110 shadow-sparkle' : ''}`}>
-                                        <service.icon className={`w-6 h-6 text-primary ${petMode ? 'animate-float-paw' : ''}`} />
+                                    <div className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-0 group-hover:opacity-50 transition-all duration-500`} />
+                                    
+                                    {/* Ícone flutuante */}
+                                    <div className={`absolute top-4 right-4 ${service.bgColor} p-3 rounded-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg`}>
+                                        <service.icon className="w-6 h-6 text-primary group-hover:animate-bounce" />
+                                    </div>
+
+                                    {/* Overlay de hover */}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                            <span className="text-sm font-bold text-[#4a2c2a]">Ver detalhes</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="p-8">
-                                    <h3 className="text-xl font-bold text-foreground mb-3 font-heading">
+                                <div className="p-8 relative">
+                                    {/* Linha decorativa */}
+                                    <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                                    
+                                    <h3 className="text-xl font-bold text-foreground mb-3 font-heading group-hover:text-primary transition-colors">
                                         {service.title}
                                     </h3>
                                     <p className="text-foreground/60 mb-6 font-body leading-relaxed">{service.desc}</p>
@@ -304,46 +427,59 @@ export function Home({
                                         href="https://wa.me/5511934823781"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all active:scale-95 group/link"
+                                        className="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all group/link"
                                         aria-label={`Solicitar orçamento para ${service.title}`}
                                     >
-                                        Solicitar <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                                        <span className="relative">
+                                            Solicitar
+                                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover/link:w-full" />
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-2 transition-transform" />
                                     </a>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    {/* CTA Buttons */}
-                    <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up">
+                    {/* CTA Buttons Aprimorados */}
+                    <div className="mt-16 flex flex-col sm:flex-row gap-6 justify-center animate-reveal-up" style={{ animationDelay: '0.6s', opacity: 0 }}>
                         <a
                             href="https://wa.me/5511934823781"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-[#25d366] text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-[#128c7e] transition-all hover:scale-105 active:scale-95 shadow-lg shadow-green-500/20 animate-pulse-glow"
+                            className="group relative bg-[#25d366] text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-3 overflow-hidden shadow-xl shadow-green-500/30 hover:shadow-2xl hover:shadow-green-500/40 transition-all duration-300 hover:-translate-y-1"
                             aria-label="Pedir orçamento via WhatsApp"
                         >
-                            <MessageCircle className="w-6 h-6 fill-white" />
-                            Orçamento via WhatsApp
+                            <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+                            <MessageCircle className="w-6 h-6 fill-white group-hover:scale-110 transition-transform" />
+                            <span>Orçamento via WhatsApp</span>
                         </a>
                         <a
                             href="https://b24-auytd7.bitrix24.site/orcamento_23.1/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-[#f6a71c] text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-[#e09516] transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
+                            className="group relative bg-[#f6a71c] text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-3 overflow-hidden shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover:-translate-y-1"
                             aria-label="Fazer orçamento online"
                         >
-                            <Calendar className="w-6 h-6" />
-                            Orçamento Online
+                            <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+                            <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                            <span>Orçamento Online</span>
                         </a>
                     </div>
                 </div>
             </section>
 
-            {/* Process Section */}
+            {/* Process Section - Passo a Passo Animado */}
             <section ref={refs.processRef} className="py-20 bg-white relative overflow-hidden">
+                {/* Linha de conexão animada */}
+                <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-primary/10 via-primary/30 to-primary/10 hidden lg:block transform -translate-y-1/2" />
+                
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="text-center mb-16 animate-fade-in-up">
+                    <div className="text-center mb-16 animate-reveal-up">
+                        <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6 border border-primary/20">
+                            <CheckCircle className="w-5 h-5 text-primary" />
+                            <span className="text-primary font-bold font-body">Simples e Rápido</span>
+                        </div>
                         <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 font-heading">
                             Como Funciona
                         </h2>
@@ -358,43 +494,64 @@ export function Home({
                                 step: '01',
                                 title: 'Contatar',
                                 desc: 'Você solicita informações ou um orçamento através de Redes Sociais, WhatsApp, Site ou Telefone.',
-                                icon: Phone
+                                icon: Phone,
+                                color: 'bg-blue-500'
                             },
                             {
                                 step: '02',
                                 title: 'Orçar',
                                 desc: 'Recebemos a solicitação e em alguns minutos você receberá o orçamento detalhado para análise.',
-                                icon: Calendar
+                                icon: Calendar,
+                                color: 'bg-green-500'
                             },
                             {
                                 step: '03',
                                 title: 'Aprovar',
                                 desc: 'Após aprovado, agendamos com a logística a dinâmica do seu serviço com todo cuidado.',
-                                icon: CheckCircle
+                                icon: CheckCircle,
+                                color: 'bg-orange-500'
                             },
                             {
                                 step: '04',
                                 title: 'Relaxar',
                                 desc: 'Agora pronto! É só aproveitar a tranquilidade e todos os benefícios que a 7Pet tem a oferecer.',
-                                icon: Heart
+                                icon: Heart,
+                                color: 'bg-red-500'
                             }
                         ].map((item, index) => (
-                            <div key={index} className="relative animate-fade-in-up" style={{ animationDelay: `${index * 0.15}s` }}>
-                                <div className="bg-background/40 border border-primary/5 rounded-3xl p-8 h-full hover:bg-white hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group active:scale-95">
-                                    <div className="text-6xl font-bold text-primary/10 mb-4 font-heading group-hover:text-primary/20 transition-colors">
+                            <div key={index} className="relative animate-reveal-up group" style={{ animationDelay: `${0.2 + index * 0.15}s`, opacity: 0 }}>
+                                <div className="bg-background/40 border border-primary/5 rounded-3xl p-8 h-full hover:bg-white hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                                    {/* Número grande de fundo */}
+                                    <div className="absolute -top-4 -right-4 text-8xl font-bold text-primary/5 font-heading select-none group-hover:text-primary/10 transition-colors">
                                         {item.step}
                                     </div>
-                                    <div className={`w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ${petMode ? 'animate-bounce' : ''}`}>
-                                        <item.icon className="w-8 h-8 text-white" />
+                                    
+                                    {/* Badge do passo */}
+                                    <div className="relative z-10">
+                                        <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                                            <item.icon className="w-8 h-8 text-white" />
+                                        </div>
+                                        
+                                        <div className="flex items-center gap-3 mb-3">
+                                            <span className="text-sm font-bold text-primary/60">PASSO {item.step}</span>
+                                        </div>
+                                        
+                                        <h3 className="text-xl font-bold text-foreground mb-3 font-heading group-hover:text-primary transition-colors">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-foreground/60 font-body leading-relaxed">{item.desc}</p>
                                     </div>
-                                    <h3 className="text-xl font-bold text-foreground mb-3 font-heading">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-foreground/60 font-body leading-relaxed">{item.desc}</p>
+                                    
+                                    {/* Indicador de hover */}
+                                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                                 </div>
+                                
+                                {/* Seta de conexão */}
                                 {index < 3 && (
-                                    <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                                        <ArrowRight className="w-8 h-8 text-primary/20 group-hover:text-primary transition-colors" />
+                                    <div className="hidden lg:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-20">
+                                        <div className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                                            <ArrowRight className="w-6 h-6 text-primary/40 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -457,10 +614,22 @@ export function Home({
                 </div>
             </section>
 
-            {/* Testimonials Section */}
+            {/* Testimonials Section - Depoimentos com Carinho */}
             <section ref={refs.testimonialsRef} className="py-20 bg-background relative overflow-hidden">
+                {/* Decorativos */}
+                <div className="absolute top-[20%] left-[5%] animate-gentle-float opacity-20">
+                    <Heart className="w-20 h-20 text-red-400 fill-red-400" />
+                </div>
+                <div className="absolute bottom-[20%] right-[5%] animate-gentle-float opacity-20" style={{ animationDelay: '1.5s' }}>
+                    <PawPrint className="w-24 h-24 text-primary/20" />
+                </div>
+
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="text-center mb-16 animate-fade-in-up">
+                    <div className="text-center mb-16 animate-reveal-up">
+                        <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full mb-6 border border-red-100">
+                            <Heart className="w-5 h-5 text-red-500 fill-red-500 animate-pulse" />
+                            <span className="text-red-600 font-bold font-body">Depoimentos de Amor</span>
+                        </div>
                         <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 font-heading">
                             O que dizem de nós
                         </h2>
@@ -495,55 +664,78 @@ export function Home({
                         ].map((testimonial, index) => (
                             <div
                                 key={index}
-                                className="bg-white rounded-[2rem] p-8 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 active:scale-95 animate-fade-in-up relative border border-primary/5 group"
-                                style={{ animationDelay: `${index * 0.1}s` }}
+                                className="group bg-white rounded-[2rem] p-8 shadow-xl shadow-primary/5 hover:shadow-2xl hover:shadow-primary/15 transition-all duration-500 hover:-translate-y-3 animate-reveal-up relative border border-primary/5 cursor-pointer overflow-hidden"
+                                style={{ animationDelay: `${0.2 + index * 0.1}s`, opacity: 0 }}
                             >
-                                <div className="flex items-center gap-5 mb-6">
-                                    <div className="w-20 h-20 rounded-2xl overflow-hidden bg-background p-1 border-2 border-primary/10 group-hover:rotate-3 transition-transform">
-                                        <img
-                                            src={testimonial.pet}
-                                            alt={`Pet de ${testimonial.name}`}
-                                            className="w-full h-full object-cover rounded-xl"
-                                            loading="lazy"
-                                        />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-foreground font-heading text-lg">{testimonial.name}</h4>
-                                        <div className="flex gap-1 mt-1">
-                                            {[...Array(testimonial.rating)].map((_, i) => (
-                                                <Star key={i} className="w-4 h-4 text-secondary fill-secondary" />
-                                            ))}
+                                {/* Fundo gradiente no hover */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-5 mb-6">
+                                        <div className="w-20 h-20 rounded-2xl overflow-hidden bg-background p-1 border-2 border-primary/10 group-hover:border-primary/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
+                                            <img
+                                                src={testimonial.pet}
+                                                alt={`Pet de ${testimonial.name}`}
+                                                className="w-full h-full object-cover rounded-xl"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-foreground font-heading text-lg group-hover:text-primary transition-colors">{testimonial.name}</h4>
+                                            <div className="flex gap-1 mt-1">
+                                                {[...Array(testimonial.rating)].map((_, i) => (
+                                                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400 group-hover:scale-110 transition-transform" style={{ transitionDelay: `${i * 50}ms` }} />
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <p className="text-foreground/70 mb-6 font-body italic leading-relaxed text-lg">"{testimonial.text}"</p>
-                                <div className="flex justify-between items-center text-sm font-body text-foreground/40">
-                                    <span>{testimonial.date}</span>
-                                    <Heart className="w-4 h-4 text-primary fill-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    
+                                    <div className="relative">
+                                        <span className="absolute -top-2 -left-2 text-6xl text-primary/10 font-heading">"</span>
+                                        <p className="text-foreground/70 mb-6 font-body italic leading-relaxed text-lg relative z-10 pl-4">{testimonial.text}</p>
+                                    </div>
+                                    
+                                    <div className="flex justify-between items-center text-sm font-body text-foreground/40 pt-4 border-t border-primary/5">
+                                        <span>{testimonial.date}</span>
+                                        <Heart className="w-5 h-5 text-red-400 fill-red-400 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-125" />
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <div className="mt-16 text-center animate-fade-in-up">
+                    <div className="mt-16 text-center animate-reveal-up" style={{ animationDelay: '0.5s', opacity: 0 }}>
                         <a
                             href="https://g.page/r/CTGdKGrH3BBbEBE/review"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 bg-white text-foreground px-8 py-4 rounded-full font-bold hover:bg-white/90 transition-all border-2 border-primary/10 shadow-lg shadow-primary/5 active:scale-95"
+                            className="group inline-flex items-center gap-3 bg-white text-foreground px-8 py-4 rounded-full font-bold hover:bg-primary hover:text-white transition-all duration-300 border-2 border-primary/10 hover:border-primary shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1"
                             aria-label="Ver avaliações no Google"
                         >
-                            <Star className="w-5 h-5 text-secondary fill-secondary" />
-                            Ver no Google Reviews
+                            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500 group-hover:rotate-12 transition-transform" />
+                            <span>Ver no Google Reviews</span>
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>
                     </div>
                 </div>
             </section>
 
-            {/* Contact Section */}
+            {/* Contact Section - Contatos Interativos */}
             <section className="py-20 bg-white relative overflow-hidden">
+                {/* Background decorativo */}
+                <div className="absolute top-[10%] left-[10%] animate-gentle-float opacity-10">
+                    <Phone className="w-32 h-32 text-primary/20" />
+                </div>
+                <div className="absolute bottom-[10%] right-[10%] animate-gentle-float opacity-10" style={{ animationDelay: '2s' }}>
+                    <Mail className="w-28 h-28 text-primary/20" />
+                </div>
+
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="text-center mb-16 animate-fade-in-up">
+                    <div className="text-center mb-16 animate-reveal-up">
+                        <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6 border border-primary/20">
+                            <Phone className="w-5 h-5 text-primary" />
+                            <span className="text-primary font-bold font-body">Fale Conosco</span>
+                        </div>
                         <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 font-heading">
                             Nossos Contatos
                         </h2>
@@ -553,48 +745,67 @@ export function Home({
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <a
-                            href="https://wa.me/5511934823781"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-background/40 border border-green-500/10 rounded-[2.5rem] p-10 text-center hover:bg-[#25d366] hover:text-white transition-all duration-500 active:scale-95 group animate-fade-in-up shadow-xl shadow-green-500/5 hover:shadow-green-500/20"
-                            style={{ animationDelay: '0.1s' }}
-                            aria-label="Ligar ou mandar mensagem para o Suporte Pet"
-                        >
-                            <div className="w-20 h-20 bg-[#25d366] rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-white transition-all duration-500 shadow-lg shadow-green-500/20 group-hover:rotate-6">
-                                <Phone className="w-10 h-10 text-white group-hover:text-[#25d366]" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3 font-heading">Suporte Pet</h3>
-                            <p className="text-foreground/60 group-hover:text-white/90 font-body">(11) 93482-3781</p>
-                        </a>
-
-                        <a
-                            href="https://wa.me/5511937367986"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-background/40 border border-primary/10 rounded-[2.5rem] p-10 text-center hover:bg-primary hover:text-white transition-all duration-500 active:scale-95 group animate-fade-in-up shadow-xl shadow-primary/5 hover:shadow-primary/20"
-                            style={{ animationDelay: '0.2s' }}
-                            aria-label="Ligar ou mandar mensagem para o Financeiro"
-                        >
-                            <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-white transition-all duration-500 shadow-lg shadow-primary/20 group-hover:-rotate-6">
-                                <Phone className="w-10 h-10 text-white group-hover:text-primary" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3 font-heading">Financeiro</h3>
-                            <p className="text-foreground/60 group-hover:text-white/90 font-body">(11) 93736-7986</p>
-                        </a>
-
-                        <a
-                            href="mailto:adm@7pet.com.br"
-                            className="bg-background/40 border border-foreground/10 rounded-[2.5rem] p-10 text-center hover:bg-foreground hover:text-background transition-all duration-500 active:scale-95 group animate-fade-in-up shadow-xl shadow-foreground/5 hover:shadow-foreground/20"
-                            style={{ animationDelay: '0.3s' }}
-                            aria-label="Enviar e-mail oficial"
-                        >
-                            <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-background transition-all duration-500 shadow-lg shadow-foreground/20 group-hover:rotate-6">
-                                <Mail className="w-10 h-10 text-background group-hover:text-foreground" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3 font-heading">E-mail Oficial</h3>
-                            <p className="text-foreground/60 group-hover:text-background/90 font-body">adm@7pet.com.br</p>
-                        </a>
+                        {[
+                            {
+                                href: 'https://wa.me/5511934823781',
+                                icon: Phone,
+                                title: 'Suporte Pet',
+                                contact: '(11) 93482-3781',
+                                color: 'bg-[#25d366]',
+                                hoverColor: 'hover:bg-[#25d366]',
+                                borderColor: 'border-green-500/10',
+                                shadowColor: 'shadow-green-500/20'
+                            },
+                            {
+                                href: 'https://wa.me/5511937367986',
+                                icon: Phone,
+                                title: 'Financeiro',
+                                contact: '(11) 93736-7986',
+                                color: 'bg-primary',
+                                hoverColor: 'hover:bg-primary',
+                                borderColor: 'border-primary/10',
+                                shadowColor: 'shadow-primary/20'
+                            },
+                            {
+                                href: 'mailto:adm@7pet.com.br',
+                                icon: Mail,
+                                title: 'E-mail Oficial',
+                                contact: 'adm@7pet.com.br',
+                                color: 'bg-foreground',
+                                hoverColor: 'hover:bg-foreground',
+                                borderColor: 'border-foreground/10',
+                                shadowColor: 'shadow-foreground/20'
+                            }
+                        ].map((item, index) => (
+                            <a
+                                key={index}
+                                href={item.href}
+                                target={item.href.startsWith('http') ? '_blank' : undefined}
+                                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                className={`group relative bg-background/40 border ${item.borderColor} rounded-[2.5rem] p-10 text-center ${item.hoverColor} hover:text-white transition-all duration-500 hover:-translate-y-3 overflow-hidden animate-reveal-up shadow-xl ${item.shadowColor}`}
+                                style={{ animationDelay: `${0.2 + index * 0.1}s`, opacity: 0 }}
+                                aria-label={`Contatar ${item.title}`}
+                            >
+                                {/* Efeito de brilho no hover */}
+                                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
+                                
+                                <div className="relative z-10">
+                                    <div className={`w-20 h-20 ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-white transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-6`}>
+                                        <item.icon className="w-10 h-10 text-white group-hover:text-foreground transition-colors" />
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-3 font-heading group-hover:scale-105 transition-transform">{item.title}</h3>
+                                    <p className="text-foreground/60 group-hover:text-white/90 font-body text-lg">{item.contact}</p>
+                                    
+                                    {/* Indicador de interação */}
+                                    <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                                            Clique para conversar
+                                            <ArrowRight className="w-4 h-4 animate-bounce-horizontal" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        ))}
                     </div>
                 </div>
             </section>
