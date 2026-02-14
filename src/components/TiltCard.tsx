@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, type ReactNode } from 'react';
+import { useRef, useState, useCallback, type ReactNode } from 'react';
 
 interface TiltCardProps {
   children: ReactNode;

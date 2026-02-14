@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode, type RefObject } from 'react';
 import { PawPrint, Sparkles } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 
 interface LayoutProps {
-    children: React.ReactNode;
+    children: ReactNode;
     petMode: boolean;
     setPetMode: (mode: boolean) => void;
     scrollProgress: number;
     handleLogoClick: () => void;
     showEasterEgg: boolean;
-    scrollToSection: (ref: React.RefObject<HTMLDivElement | null>) => void;
+    scrollToSection: (ref: RefObject<HTMLDivElement | null>) => void;
     refs: {
-        heroRef: React.RefObject<HTMLDivElement | null>;
-        servicesRef: React.RefObject<HTMLDivElement | null>;
-        aboutRef: React.RefObject<HTMLDivElement | null>;
-        processRef: React.RefObject<HTMLDivElement | null>;
-        testimonialsRef: React.RefObject<HTMLDivElement | null>;
-        statsRef: React.RefObject<HTMLDivElement | null>;
+        heroRef: RefObject<HTMLDivElement | null>;
+        servicesRef: RefObject<HTMLDivElement | null>;
+        aboutRef: RefObject<HTMLDivElement | null>;
+        processRef: RefObject<HTMLDivElement | null>;
+        testimonialsRef: RefObject<HTMLDivElement | null>;
+        statsRef: RefObject<HTMLDivElement | null>;
     };
 }
 

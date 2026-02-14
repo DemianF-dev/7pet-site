@@ -1,4 +1,3 @@
-import React from 'react';
 import { Shield, Sparkles, Heart, Clock, Star, Music, Users, CreditCard, CheckCircle, Car, ArrowRight, PawPrint } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { ScrollReveal } from '../components/ScrollReveal';

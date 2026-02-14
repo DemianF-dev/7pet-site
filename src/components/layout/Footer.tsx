@@ -1,13 +1,13 @@
-import React from 'react';
+import type { RefObject } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MessageCircle, Heart, PawPrint, Mail, ExternalLink, Sparkles, Send, ArrowRight, Star } from 'lucide-react';
 
 interface FooterProps {
     petMode: boolean;
     setPetMode: (mode: boolean) => void;
-    scrollToSection: (ref: React.RefObject<HTMLDivElement | null>) => void;
-    heroRef: React.RefObject<HTMLDivElement | null>;
-    aboutRef: React.RefObject<HTMLDivElement | null>;
+    scrollToSection: (ref: RefObject<HTMLDivElement | null>) => void;
+    heroRef: RefObject<HTMLDivElement | null>;
+    aboutRef: RefObject<HTMLDivElement | null>;
 }
 
 export function Footer({ petMode, setPetMode, scrollToSection, heroRef, aboutRef }: FooterProps) {

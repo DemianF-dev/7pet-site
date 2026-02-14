@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { PawPrint, Sparkles, Heart, Star, Cloud } from 'lucide-react';
 
 interface SplinePet3DProps {

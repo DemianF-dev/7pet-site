@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
     PawPrint,
     Heart,
@@ -103,7 +103,7 @@ export function Home({
                                         <span className="inline-block hover:scale-105 transition-transform duration-300">para</span>{' '}
                                         <span className="text-[#ff7a3d] inline-block hover:scale-105 transition-transform duration-300">Pets</span>
                                     </h1>
-                                    
+
                                     {/* Ícones flutuantes no hover */}
                                     <div className={`absolute -top-8 left-1/2 -translate-x-1/2 flex gap-3 transition-all duration-500 ${isSloganHovered ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
                                         <Heart className="w-6 h-6 text-red-500 fill-red-500 animate-bounce" style={{ animationDelay: '0s' }} />
@@ -196,7 +196,7 @@ export function Home({
                                 >
                                     <img src="/hero-cat.png" alt="Gato" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    
+
                                     {/* Badge Amor com animação */}
                                     <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md rounded-full px-4 py-2 shadow-xl flex items-center gap-2 z-40 border border-primary/5 animate-pop-in hover:scale-110 transition-transform cursor-default" style={{ animationDelay: '0.8s' }}>
                                         <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" />
@@ -215,7 +215,7 @@ export function Home({
                                 >
                                     <img src="/hero-dog2.png" alt="Cachorro Golden" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    
+
                                     {/* Badge 5 Estrelas com animação */}
                                     <div className="absolute -left-4 bottom-1/4 bg-white/95 backdrop-blur-md rounded-full px-4 py-2 shadow-xl flex items-center gap-2 z-40 border border-primary/5 animate-pop-in hover:scale-110 transition-transform cursor-default" style={{ animationDelay: '1s' }}>
                                         <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 animate-spin" style={{ animationDuration: '3s' }} />
@@ -402,7 +402,7 @@ export function Home({
                                         loading="lazy"
                                     />
                                     <div className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-0 group-hover:opacity-50 transition-all duration-500`} />
-                                    
+
                                     {/* Ícone flutuante */}
                                     <div className={`absolute top-4 right-4 ${service.bgColor} p-3 rounded-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg`}>
                                         <service.icon className="w-6 h-6 text-primary group-hover:animate-bounce" />
@@ -418,7 +418,7 @@ export function Home({
                                 <div className="p-8 relative">
                                     {/* Linha decorativa */}
                                     <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                                    
+
                                     <h3 className="text-xl font-bold text-foreground mb-3 font-heading group-hover:text-primary transition-colors">
                                         {service.title}
                                     </h3>
@@ -473,7 +473,7 @@ export function Home({
             <section ref={refs.processRef} className="py-20 bg-white relative overflow-hidden">
                 {/* Linha de conexão animada */}
                 <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-primary/10 via-primary/30 to-primary/10 hidden lg:block transform -translate-y-1/2" />
-                
+
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-16 animate-reveal-up">
                         <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6 border border-primary/20">
@@ -525,27 +525,27 @@ export function Home({
                                     <div className="absolute -top-4 -right-4 text-8xl font-bold text-primary/5 font-heading select-none group-hover:text-primary/10 transition-colors">
                                         {item.step}
                                     </div>
-                                    
+
                                     {/* Badge do passo */}
                                     <div className="relative z-10">
                                         <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
                                             <item.icon className="w-8 h-8 text-white" />
                                         </div>
-                                        
+
                                         <div className="flex items-center gap-3 mb-3">
                                             <span className="text-sm font-bold text-primary/60">PASSO {item.step}</span>
                                         </div>
-                                        
+
                                         <h3 className="text-xl font-bold text-foreground mb-3 font-heading group-hover:text-primary transition-colors">
                                             {item.title}
                                         </h3>
                                         <p className="text-foreground/60 font-body leading-relaxed">{item.desc}</p>
                                     </div>
-                                    
+
                                     {/* Indicador de hover */}
                                     <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                                 </div>
-                                
+
                                 {/* Seta de conexão */}
                                 {index < 3 && (
                                     <div className="hidden lg:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-20">
@@ -669,7 +669,7 @@ export function Home({
                             >
                                 {/* Fundo gradiente no hover */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                
+
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-5 mb-6">
                                         <div className="w-20 h-20 rounded-2xl overflow-hidden bg-background p-1 border-2 border-primary/10 group-hover:border-primary/30 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
@@ -689,12 +689,12 @@ export function Home({
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="relative">
                                         <span className="absolute -top-2 -left-2 text-6xl text-primary/10 font-heading">"</span>
                                         <p className="text-foreground/70 mb-6 font-body italic leading-relaxed text-lg relative z-10 pl-4">{testimonial.text}</p>
                                     </div>
-                                    
+
                                     <div className="flex justify-between items-center text-sm font-body text-foreground/40 pt-4 border-t border-primary/5">
                                         <span>{testimonial.date}</span>
                                         <Heart className="w-5 h-5 text-red-400 fill-red-400 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-125" />
@@ -788,14 +788,14 @@ export function Home({
                             >
                                 {/* Efeito de brilho no hover */}
                                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
-                                
+
                                 <div className="relative z-10">
                                     <div className={`w-20 h-20 ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-white transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-6`}>
                                         <item.icon className="w-10 h-10 text-white group-hover:text-foreground transition-colors" />
                                     </div>
                                     <h3 className="text-xl font-bold mb-3 font-heading group-hover:scale-105 transition-transform">{item.title}</h3>
                                     <p className="text-foreground/60 group-hover:text-white/90 font-body text-lg">{item.contact}</p>
-                                    
+
                                     {/* Indicador de interação */}
                                     <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                         <span className="inline-flex items-center gap-2 text-sm font-semibold">

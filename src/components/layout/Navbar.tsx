@@ -1,4 +1,4 @@
-import React from 'react';
+import type { RefObject } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { PawPrint, MessageCircle, Sparkles, Store } from 'lucide-react';
 
@@ -7,14 +7,14 @@ interface NavbarProps {
     isMenuOpen: boolean;
     setIsMenuOpen: (open: boolean) => void;
     handleLogoClick: () => void;
-    scrollToSection: (ref: React.RefObject<HTMLDivElement | null>) => void;
+    scrollToSection: (ref: RefObject<HTMLDivElement | null>) => void;
     refs: {
-        heroRef: React.RefObject<HTMLDivElement | null>;
-        servicesRef: React.RefObject<HTMLDivElement | null>;
-        aboutRef: React.RefObject<HTMLDivElement | null>;
-        processRef: React.RefObject<HTMLDivElement | null>;
-        testimonialsRef: React.RefObject<HTMLDivElement | null>;
-        statsRef: React.RefObject<HTMLDivElement | null>;
+        heroRef: RefObject<HTMLDivElement | null>;
+        servicesRef: RefObject<HTMLDivElement | null>;
+        aboutRef: RefObject<HTMLDivElement | null>;
+        processRef: RefObject<HTMLDivElement | null>;
+        testimonialsRef: RefObject<HTMLDivElement | null>;
+        statsRef: RefObject<HTMLDivElement | null>;
     };
 }
 
